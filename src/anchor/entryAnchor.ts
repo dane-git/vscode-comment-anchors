@@ -17,7 +17,7 @@ export default class EntryAnchor extends EntryBase {
 	 * Child anchors, only present when this anchor is a region type
 	 */
 	private childAnchors: EntryAnchor[] = [];
-
+// SECTION: ANCHOR TAG CONSTRUCTOR
 	constructor(
 		public readonly anchorTag: string,		// The tag e.g. "ANCHOR"
 		public readonly anchorText: string,		// The text after the anchor tag
@@ -28,6 +28,7 @@ export default class EntryAnchor extends EntryBase {
 		public readonly scope: string,			// The anchor scope
 		public readonly showLine: Boolean,		// Whether to display line numbers
 		public readonly file: Uri				// The file this anchor is in
+		// NOTE: add another attribute to make section id's and to link section id's
 	) {
 		super("", TreeItemCollapsibleState.None);
 
@@ -40,6 +41,7 @@ export default class EntryAnchor extends EntryBase {
 				uri: file,
 				lineNumber: this.lineNumber - 1,
 				at: EntryAnchor.ScrollPosition
+				// NOTE: add argument: end: , linkedTo: linkId [{ strength: , linkCenter: , linkDispersionType: , linkDispersionSlope: }], linkedFrom:  linkId [{ strength: , linkCenter: , linkDispersionType: , linkDispersionSlope: }], related: linkID [{relativeLinkStuff}]
 			}]
 		};
 

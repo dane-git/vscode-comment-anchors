@@ -8,13 +8,15 @@ const asyncDelay = (delay: number) : Promise<void> => {
 		}, delay);
 	});
 }
-
+// ANCHOR blank //
 import * as path from 'path';
 import * as fs from 'fs';
 import * as escape from 'escape-string-regexp';
 import EntryAnchor from './anchor/entryAnchor';
 import EntryError from './anchor/entryError';
+// SECTION: Interesting-imports
 import {
+	// NOTE: window, workspace,EventEmitter,TextEditor, TextDocument, Uri, FoldingRange, FoldingRangeKind,ProviderResult, CompletionItem, CompletionItemKind, CompletionList, Disposable} from "vscode";
 	window,
 	workspace,
 	EventEmitter,
@@ -45,6 +47,7 @@ import EntryLoading from './anchor/entryLoading';
 import EntryScan from './anchor/entryScan';
 import EntryAnchorRegion from './anchor/entryAnchorRegion';
 import registerDefaults from './util/defaultTags';
+// !SECTION: end-InterestingImports
 
 export class AnchorEngine {
 
@@ -69,7 +72,7 @@ export class AnchorEngine {
 	/** The decorators used for decorating the anchors */
 	public anchorDecorators: Map<string, TextEditorDecorationType> = new Map();
 	
-	// ANCHOR Possible error entries //
+	// aANCHOR Possible error entries //
 	public errorUnusableItem: EntryError = new EntryError('Waiting for open editor...');
 	public errorEmptyItem: EntryError = new EntryError('No comment anchors detected');
 	public errorEmptyWorkspace: EntryError = new EntryError('No comment anchors in workspace');
@@ -206,7 +209,7 @@ export class AnchorEngine {
 					this.tags.delete(tag.tag.toUpperCase());
 					return;
 				}
-
+				//NOTE: customTags-opts-options
 				const opts = {...def, ...tag};
 
 				this.tags.set(tag.tag.toUpperCase(), opts);
@@ -274,7 +277,7 @@ export class AnchorEngine {
 					this.anchorDecorators.set(tag.tag, window.createTextEditorDecorationType(highlight));
 				}
 			});
-
+	// SECTION matchTags-sectionBlock
 			// Fetch an array of tags
 			let matchTags = Array.from(this.tags.keys());
 
@@ -282,13 +285,14 @@ export class AnchorEngine {
 			const endTag = this._config.tags.endTag;
 
 			AnchorEngine.output("endTag: " + endTag);
-			
+			// NOTE: isRegion 
 			this.tags.forEach((entry, tag) => { 
 				if(entry.isRegion) {
 					matchTags.push(endTag + tag);
 				}
 			});
 
+			//NOTE: matcher-mapped to  const tages
 			// Create a matcher for the tags
 			const tags = matchTags.map(tag => escape(tag)).join('|');
 
